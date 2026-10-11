@@ -1,40 +1,41 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
+#!/usr/bin/env python3
+"""Distribute cookies evenly and handle invalid input without crashing."""
 
 
-""" 
-The party_planner function below takes as input a number of party people and cookies and figures out how many cookies each person gets at the party, assuming equitable distribution of cookies. 
-Then, it returns that number along with how many cookies will be left over.
+def party_planner(cookies: int, people: int) -> tuple[int | None, int | None]:
+    """Return (cookies per person, leftovers), or (None, None) for invalid input."""
+    if people <= 0:
+        print("Number of people must be greater than zero.")
+        return None, None
 
-#Right now, calling the function with an input of 0 people will cause an error, because it creates a ZeroDivisionError exception. Edit the party_planner function to handle this invalid input.
-If it runs into this exception, it should print a warning message to the user and request they input a different number of people.
+    if cookies < 0:
+        print("Number of cookies cannot be negative.")
+        return None, None
 
- After you've edited the function, try running the file again and make sure it does what you intended. Try it with several different input values, including 0 and other values for the number of people.
- """
+    cookies_each, leftovers = divmod(cookies, people)
+    return cookies_each, leftovers
 
-def party_planner(cookies, people):
-    leftovers = None
-    num_each = None
-    return(num_each, leftovers)
-try:
-    num_each = cookies // people
-    leftovers = cookies % people
-except:
-    print('Number of people cannot be zero')
-# The main code block is below; do not edit this
-lets_party = 'y'
-while lets_party == 'y':
 
-    cookies = int(input("How many cookies are you baking? "))
-    people = int(input("How many people are attending? "))
+def main() -> None:
+    while True:
+        try:
+            cookies = int(input("How many cookies are you baking? "))
+            people = int(input("How many people are attending? "))
+        except ValueError:
+            print("Please enter whole numbers for both questions.")
+        else:
+            cookies_each, leftovers = party_planner(cookies, people)
+            if cookies_each is not None and leftovers is not None:
+                print(
+                    f"Let's party! {people} people get {cookies_each} cookies "
+                    f"each, with {leftovers} left over."
+                )
 
-    cookies_each, leftovers = party_planner(cookies, people)
+        again = input("Would you like to plan another party? (y/n) ").strip().lower()
+        if again != "y":
+            print("Goodbye.")
+            break
 
-    if cookies_each:  # if cookies_each is not None
-        message = "\nLet's party! We'll have {} people attending, they'll each get to eat {} cookies, and we'll have {} left over."
-        print(message.format(people, cookies_each, leftovers))
 
-    lets_party = input("\nWould you like to party more? (y or n) ")
-
+if __name__ == "__main__":
+    main()
