@@ -9,24 +9,33 @@ A small Python CLI exercise in defensive programming: divide a number of cookies
 - Rejects negative cookie counts.
 - Catches non-integer terminal input and lets the user try again.
 - Keeps the calculation in `party_planner()`, separate from the prompt loop.
+- Includes unit tests for normal results and invalid numeric inputs.
 
 ## Run
 
 Requires Python 3.10 or newer.
 
-~~~bash
+```bash
 python handling_errors.py
-~~~
+```
 
 Example:
 
-~~~text
+```text
 How many cookies are you baking? 25
 How many people are attending? 4
 Let's party! 4 people get 6 cookies each, with 1 left over.
-~~~
+```
 
-## Edge cases worth trying
+## Run the tests
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+GitHub Actions runs the test suite on Python 3.10, 3.11, and 3.12 when relevant files change.
+
+## Edge cases
 
 | Cookies | People | Expected result |
 |---:|---:|---|
